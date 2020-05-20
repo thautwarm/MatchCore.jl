@@ -31,7 +31,7 @@ function init_cfg(cfg::CFGSpec)
     exp
 end
 
-const _const_lineno = LineNumberNode(32, "<codegen>")
+const _const_lineno = LineNumberNode(32, Symbol("<codegen>"))
 function init_cfg!(ex::Expr, cf_info::Dict{Symbol, Symbol})
     args = ex.args
     for i in eachindex(args)
