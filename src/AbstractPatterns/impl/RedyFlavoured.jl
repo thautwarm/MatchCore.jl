@@ -216,7 +216,7 @@ function myimpl()
         if v isa Symbol
             v = QuoteNode(v)
         end
-        (isprimitivetype(ty) || ty.size == 0 && !ty.mutable) ?
+        (isprimitivetype(ty) || ty.size == 0 && !ismutabletype(ty)) ?
             CheckCond(:($(target.repr) === $v)) :
             CheckCond(:($(target.repr) == $v))
     end
@@ -564,4 +564,17 @@ function backend(
     env = CompileEnv(terminal, hygienic, gensym(:return), gensym(:final))
     compile_spec(env, expr_to_match, spec, ln)
 end
+
+
+# Compat patch
+if isdefined(Base, :ismutabletype)
+    # https://github.com/JuliaLang/julia/issues/41049
+    using Base: ismutabletype
+else
+    function ismutabletype(@nospecialize(t::Type))
+        t = Base.unwrap_unionall(t)
+        return isa(t, DataType) && t.mutable
+    end
 end
+
+end # module
