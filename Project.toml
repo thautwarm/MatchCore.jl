@@ -1,7 +1,7 @@
 name = "MatchCore"
 uuid = "5dd3f0b1-72a9-48ad-ae6e-79f673da005f"
 authors = ["thautawarm"]
-version = "0.1.0"
+version = "0.1.1"
 
 [compat]
 julia = "1"
